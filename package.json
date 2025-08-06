@@ -18,7 +18,9 @@
     "clean": "pnpm -r clean && rm -rf node_modules",
     "changeset": "changeset",
     "version": "changeset version && pnpm install --no-frozen-lockfile",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && changeset publish",
+    "audit": "pnpm audit --audit-level moderate",
+    "audit:fix": "pnpm audit --fix"
   },
   "keywords": [],
   "author": "",
