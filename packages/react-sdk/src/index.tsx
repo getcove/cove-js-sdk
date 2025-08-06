@@ -1,5 +1,5 @@
 import type { Nullable } from '@cove/types';
-import { createContext, createElement, type ReactNode, useContext } from 'react';
+import { createContext, type ReactNode, useContext } from 'react';
 
 export interface CoveConfig {
   apiKey?: string;
@@ -15,7 +15,7 @@ export interface CoveProviderProps {
 }
 
 export function CoveProvider({ children, config }: CoveProviderProps) {
-  return createElement(CoveContext.Provider, { value: config ?? null }, children);
+  return <CoveContext.Provider value={config ?? null}>{children}</CoveContext.Provider>;
 }
 
 export function useCove(): Nullable<CoveConfig> {
