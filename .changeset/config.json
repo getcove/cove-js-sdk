@@ -5,9 +5,9 @@
   "fixed": [],
   "linked": [],
   "access": "public",
-  "baseBranch": "develop",
+  "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@cove/types", "@cove/utils"],
+  "ignore": [],
   "privatePackages": {
     "version": true,
     "tag": false

@@ -13,7 +13,7 @@
     "lint:fix": "biome check --write .",
     "check": "pnpm typecheck && pnpm lint",
     "check:fix": "pnpm typecheck && pnpm lint:fix",
-    "clean": "pnpm -r clean && rm -rf node_modules",
+    "clean": "pnpm -r clean && rm -rf dist node_modules *.tsbuildinfo",
     "changeset": "changeset",
     "version": "changeset version && pnpm install --no-frozen-lockfile",
     "release": "pnpm check && pnpm build && changeset publish",
