@@ -1,9 +1,8 @@
-import type { Nullable } from '@cove/types';
 import { useContext } from 'react';
 import { CoveContext } from '../providers/CoveProvider';
-import type { CoveConfig } from '../types';
+import type { CoveState } from '../types';
 
-export function useCove(): Nullable<CoveConfig> {
+export function useCove(): CoveState {
   const context = useContext(CoveContext);
 
   if (context === undefined) {

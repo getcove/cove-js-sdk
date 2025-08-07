@@ -1,8 +1,8 @@
-// Providers
-
 // Hooks
-export { useCove } from './hooks';
+export { useCove, useFeatureFlag } from './hooks';
+
+// Providers
 export { CoveContext, CoveProvider } from './providers';
 
 // Types
-export type { CoveConfig, CoveProviderProps } from './types';
+export type { CoveConfig, CoveProviderProps, CoveState } from './types';
