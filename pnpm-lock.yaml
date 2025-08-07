@@ -35,10 +35,10 @@ importers:
 
   packages/react-sdk:
     dependencies:
-      '@cove/types':
+      '@getcove/types':
         specifier: workspace:*
         version: link:../types
-      '@cove/utils':
+      '@getcove/utils':
         specifier: workspace:*
         version: link:../utils
     devDependencies:
@@ -53,7 +53,7 @@ importers:
 
   packages/utils:
     dependencies:
-      '@cove/types':
+      '@getcove/types':
         specifier: workspace:*
         version: link:../types
 

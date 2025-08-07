@@ -1,4 +1,4 @@
-import type { Nullable, Result } from '@cove/types';
+import type { Nullable, Result } from '@getcove/types';
 
 /**
  * Type guard to check if a value is null or undefined
