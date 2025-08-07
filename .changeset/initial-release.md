@@ -1,8 +1,8 @@
 ---
-"@cove/react-sdk": minor
+"@getcove/react-sdk": minor
 ---
 
-Initial release of @cove/react-sdk with core functionality:
+Initial release of @getcove/react-sdk with core functionality:
 - CoveProvider for managing SDK initialization and state
 - useCove hook for accessing SDK context
 - useFeatureFlag hook for feature flag management

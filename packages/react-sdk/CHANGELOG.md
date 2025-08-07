@@ -1,4 +1,4 @@
-# @cove/react-sdk
+# @getcove/react-sdk
 
 ## 0.0.0
 
