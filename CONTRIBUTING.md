@@ -206,18 +206,39 @@ Any additional context
 
 1. **Create npm account** (if needed):
    - Sign up at https://www.npmjs.com/signup
+   - Enable two-factor authentication (2FA) for security
 
-2. **Generate automation token:**
+2. **Login from terminal:**
    ```bash
    npm login
+   # Enter username, password, email, and OTP (if 2FA enabled)
+   
+   # Verify login status
+   npm whoami
+   ```
+
+3. **Generate automation token for CI/CD:**
+   ```bash
    npm token create --type=automation
    ```
 
-3. **Add token to GitHub:**
+4. **Add token to GitHub:**
    - Copy the generated token
    - Add as `NPM_TOKEN` secret in GitHub repository settings
 
-4. **Verify package names are available:**
+5. **Configure package access:**
+   - All public packages must include `publishConfig` in their `package.json`:
+   ```json
+   {
+     "name": "@cove/react-sdk",
+     "publishConfig": {
+       "access": "public"
+     }
+   }
+   ```
+   - This is required for scoped packages to be published publicly
+
+6. **Verify package names are available:**
    ```bash
    npm view @cove/react-sdk  # Should return 404 if available
    ```

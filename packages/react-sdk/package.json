@@ -13,6 +13,9 @@
     "clean": "rm -rf dist *.tsbuildinfo"
   },
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "react": "^18.0.0"
   },
