@@ -53,6 +53,12 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Need full history for tags
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
@@ -72,31 +78,38 @@ jobs:
         run: pnpm changeset publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
-      - name: Extract Published Packages
-        id: extract
+      - name: Create Git Tags
+        id: tag
         if: steps.changesets.outcome == 'success'
         run: |
-          echo "Extracting published packages info..."
-          # Get the latest tag created by changeset
+          # Create tags for published packages
+          pnpm changeset tag
+          
+          # Push tags to GitHub
+          git push --follow-tags
+          
+          # Get the latest tag for release creation
           LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
           
           # Check if a tag was created
           if [ -n "$LATEST_TAG" ]; then
             echo "published=true" >> $GITHUB_OUTPUT
+            echo "Created tag: $LATEST_TAG"
           else
             echo "published=false" >> $GITHUB_OUTPUT
+            echo "No tags were created"
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Create GitHub Release
-        if: steps.extract.outputs.published == 'true'
+        if: steps.tag.outputs.published == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.extract.outputs.tag }}
-          name: ${{ steps.extract.outputs.tag }}
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: ${{ steps.tag.outputs.tag }}
           generate_release_notes: true
           draft: false
           prerelease: false
