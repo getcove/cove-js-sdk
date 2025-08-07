@@ -21,26 +21,22 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          # Fetch all history for reliable version calculation
           fetch-depth: 0
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Create Version PR
         uses: changesets/action@v1
         with:
+          branch: main  # Target main branch for the PR
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
@@ -52,31 +48,53 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      contents: read   # To checkout code
-      id-token: write  # For OIDC token to authenticate with npm
+      contents: read
+      id-token: write # For npm Provenance
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 9
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'  # Required for OIDC
-
+          registry-url: 'https://registry.npmjs.org'
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
-
       - name: Build Packages
         run: pnpm build
-
       - name: Publish to npm with Provenance
         run: pnpm changeset publish --provenance --access public
         env:
           NPM_CONFIG_PROVENANCE: true
+
+  # Stage 3: Sync main back to develop after successful publish
+  sync-develop:
+    name: Sync main back to develop
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    needs: [publish]  # Only run after successful publish
+    permissions:
+      contents: write  # Needs permission to push changes
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Fetch all history for proper merge
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync branches
+        run: |
+          git checkout develop
+          git pull origin develop
+          git merge main --no-ff -m "chore: sync main back to develop"
+          git push origin develop
