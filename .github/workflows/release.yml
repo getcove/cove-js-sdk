@@ -48,8 +48,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      id-token: write # For npm Provenance
+      contents: write  # For creating tags and releases
+      id-token: write  # For npm Provenance
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -68,10 +68,40 @@ jobs:
       - name: Build Packages
         run: pnpm build
       - name: Publish to npm with Provenance
+        id: changesets
         run: pnpm changeset publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract Published Packages
+        id: extract
+        if: steps.changesets.outcome == 'success'
+        run: |
+          echo "Extracting published packages info..."
+          # Get the latest tag created by changeset
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "tag=$LATEST_TAG" >> $GITHUB_OUTPUT
+          
+          # Check if a tag was created
+          if [ -n "$LATEST_TAG" ]; then
+            echo "published=true" >> $GITHUB_OUTPUT
+          else
+            echo "published=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Create GitHub Release
+        if: steps.extract.outputs.published == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.extract.outputs.tag }}
+          name: ${{ steps.extract.outputs.tag }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # Stage 3: Sync main back to develop after successful publish
   sync-develop:
