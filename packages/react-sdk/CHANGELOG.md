@@ -1,5 +1,11 @@
 # @cove/react-sdk
 
+## 0.1.2
+
+### Patch Changes
+
+- 85861f7: Fix workflow configuration to ensure Release PRs target main branch
+
 ## 0.1.1
 
 ### Patch Changes
