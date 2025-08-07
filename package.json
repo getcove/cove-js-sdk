@@ -2,6 +2,7 @@
   "name": "cove-js-sdk",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "build": "pnpm -r build",
@@ -17,7 +18,8 @@
     "changeset": "changeset",
     "version": "changeset version && pnpm install --no-frozen-lockfile",
     "release": "pnpm check && pnpm build && changeset publish",
-    "audit": "pnpm audit --audit-level moderate"
+    "audit": "pnpm audit --audit-level moderate",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +29,8 @@
     "@changesets/cli": "^2.29.5",
     "@types/node": "^24.2.0",
     "@vitest/ui": "^3.2.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.4",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"
   }
