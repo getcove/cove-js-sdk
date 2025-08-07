@@ -1,5 +1,11 @@
 # @cove/react-sdk
 
+## 0.1.3
+
+### Patch Changes
+
+- 7d732c4: Fix Release workflow to create PRs targeting main branch instead of develop
+
 ## 0.1.2
 
 ### Patch Changes
