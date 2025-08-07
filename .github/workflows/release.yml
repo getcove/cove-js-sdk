@@ -70,6 +70,7 @@ jobs:
       - name: Publish to npm with Provenance
         run: pnpm changeset publish --provenance --access public
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
 
   # Stage 3: Sync main back to develop after successful publish
