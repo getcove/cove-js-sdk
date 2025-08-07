@@ -55,15 +55,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       
-      - name: Run security audit
-        run: pnpm audit --audit-level moderate
-        continue-on-error: true  # Don't fail the build on audit issues
-      
-      - name: Check for known vulnerabilities
-        run: |
-          if pnpm audit --audit-level high; then
-            echo "✅ No high or critical vulnerabilities found"
-          else
-            echo "⚠️ High or critical vulnerabilities detected"
-            exit 1
-          fi
+      - name: Run security audit for high severity issues
+        run: pnpm audit --audit-level high

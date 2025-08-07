@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+        with:
+          # Fetch all history for reliable version calculation
+          fetch-depth: 0
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
@@ -35,10 +38,9 @@ jobs:
       - name: Create Version PR
         uses: changesets/action@v1
         with:
-          version: pnpm version
+          # 'version' parameter not needed; creating PR is the default
           commit: "chore: version packages"
           title: "chore: version packages"
-          createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
