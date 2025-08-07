@@ -1,5 +1,5 @@
 {
-  "name": "@cove/react-sdk",
+  "name": "@getcove/react-sdk",
   "version": "0.1.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,8 +22,8 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
-    "@cove/types": "workspace:*",
-    "@cove/utils": "workspace:*"
+    "@getcove/types": "workspace:*",
+    "@getcove/utils": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.1.9",
