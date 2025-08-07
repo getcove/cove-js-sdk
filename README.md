@@ -8,33 +8,6 @@ A modern TypeScript SDK for building Cove applications.
 - `@cove/types` - (Internal) TypeScript type definitions
 - `@cove/utils` - (Internal) Utility functions
 
-## Installation
-
-```bash
-npm install @cove/react-sdk
-# or
-pnpm add @cove/react-sdk
-```
-
-## Usage
-
-```tsx
-import { CoveProvider, useCove } from '@cove/react-sdk';
-
-function App() {
-  return (
-    <CoveProvider config={{ apiKey: 'your-api-key' }}>
-      <YourApp />
-    </CoveProvider>
-  );
-}
-
-function YourApp() {
-  const cove = useCove();
-  // Use the Cove SDK
-}
-```
-
 ## Development
 
 This project uses:

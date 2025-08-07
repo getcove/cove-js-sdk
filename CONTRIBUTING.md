@@ -27,6 +27,46 @@ We use a Git flow with two main branches:
 - `develop`: Integration branch for new features and fixes
 - `main`: Production-ready releases only
 
+### Complete Workflow Diagram
+
+```mermaid
+flowchart TD
+    Start([Developer starts work]) --> Branch[Create feature branch from develop]
+    Branch --> Code[Write code]
+    Code --> Changeset[Add changeset: pnpm changeset]
+    Changeset --> Commit[Commit code + changeset]
+    Commit --> Push[Push to feature branch]
+    Push --> PR1[Create PR to develop]
+    PR1 --> Review{Code Review}
+    Review -->|Approved| Merge1[Merge to develop]
+    Review -->|Changes needed| Code
+    
+    Merge1 --> Auto[🤖 GitHub Actions triggered]
+    Auto --> VersionPR[Auto-creates Version PR]
+    VersionPR --> Contains[Version PR contains:<br/>• Version bumps<br/>• CHANGELOG updates<br/>• Removed changesets]
+    Contains --> Review2{Review Version PR}
+    Review2 -->|Approved| Merge2[Merge back to develop]
+    
+    Merge2 --> Ready{Ready to release?}
+    Ready -->|No| Start
+    Ready -->|Yes| ReleasePR[Create PR: develop → main]
+    ReleasePR --> Review3{Final Review}
+    Review3 -->|Approved| Merge3[Merge to main]
+    
+    Merge3 --> Publish[🤖 GitHub Actions triggered]
+    Publish --> Build[Build packages]
+    Build --> NPM[Publish to npm]
+    NPM --> Tags[Create git tags]
+    Tags --> End([Release complete!])
+    
+    style Auto fill:#e1f5fe
+    style Publish fill:#e1f5fe
+    style VersionPR fill:#fff3e0
+    style Contains fill:#fff3e0
+    style NPM fill:#c8e6c9
+    style Tags fill:#c8e6c9
+```
+
 ### Making Changes
 
 1. **Create a feature branch from develop:**
@@ -73,16 +113,21 @@ We use a Git flow with two main branches:
 
 ### Release Process
 
-Releases are automated when changes are merged from `develop` to `main`:
+Releases follow a two-stage automated process to prevent branch divergence:
 
-1. Create a PR from `develop` to `main`
-2. Review all accumulated changes
-3. Merge the PR
-4. GitHub Actions will automatically:
-   - Version packages based on changesets
-   - Update CHANGELOGs
-   - Publish to npm
-   - Create git tags
+**Stage 1: Version PR (develop branch)**
+- When changesets are pushed to `develop`, GitHub Actions automatically creates a "Version PR"
+- This PR contains version bumps and CHANGELOG updates
+- Review and merge this PR back into `develop`
+
+**Stage 2: Publish (main branch)**
+- Create a PR from `develop` to `main` with all changes including versions
+- When merged to `main`, GitHub Actions automatically:
+  - Builds all packages
+  - Publishes to npm
+  - Creates git tags
+
+This ensures `develop` and `main` stay in sync with no divergent commits.
 
 ### Commands
 

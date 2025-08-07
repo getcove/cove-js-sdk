@@ -3,13 +3,16 @@ name: Release
 on:
   push:
     branches:
+      - develop
       - main
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
-    name: Release
+  # Stage 1: Create Release PR when pushing to develop
+  release-pr:
+    name: Create Release PR
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -29,14 +32,44 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Release Pull Request or Publish to npm
-        id: changesets
+      - name: Create Version PR
         uses: changesets/action@v1
         with:
-          publish: pnpm release
           version: pnpm version
-          commit: "chore: release packages"
-          title: "chore: release packages"
+          commit: "chore: version packages"
+          title: "chore: version packages"
+          createGithubReleases: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Stage 2: Publish when merging to main
+  publish:
+    name: Publish to npm
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Packages
+        run: pnpm build
+
+      - name: Publish to npm
+        run: pnpm changeset publish
+        env:
+          # NPM_TOKEN must be set as a repository secret in GitHub settings
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
