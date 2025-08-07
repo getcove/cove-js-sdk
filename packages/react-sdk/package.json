@@ -13,6 +13,11 @@
     "clean": "rm -rf dist *.tsbuildinfo"
   },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcove/cove-js-sdk",
+    "directory": "packages/react-sdk"
+  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/",
