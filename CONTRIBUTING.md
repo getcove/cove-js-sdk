@@ -1,298 +1,139 @@
 # Contributing to Cove JS SDK
 
-## Getting Started
+## Quick Start
 
-### Prerequisites
-- Node.js v20.x or later
-- pnpm v9.x or later
-
-### Initial Setup
 ```bash
-# Clone the repository
+# Setup
 git clone https://github.com/your-org/cove-js-sdk.git
 cd cove-js-sdk
-
-# Install dependencies
 pnpm install
-
-# Build all packages
 pnpm build
 
-# Run tests to verify setup
-pnpm test
+# Development
+pnpm dev          # Start dev mode
+pnpm test         # Run tests
+pnpm check        # Type check + lint
+pnpm changeset    # Add changeset for your changes
 ```
 
 ## Development Workflow
 
-### Branch Structure
-- `develop`: Integration branch for new features and fixes
-- `main`: Production-ready releases only
+### 1. Branch Strategy
+- **develop** → Feature integration
+- **main** → Production releases only
 
-### Workflow Overview
+### 2. Making Changes
+```bash
+# Start from develop
+git checkout develop && git pull
+git checkout -b feat/your-feature
+
+# Make changes, then add changeset
+pnpm changeset  # Select packages, version bump, write changelog
+
+# Commit (auto-runs format, lint, type check, tests)
+git add . && git commit -m "feat: your description"
+
+# Push and create PR to develop
+git push origin feat/your-feature
+```
+
+### 3. Commit Convention
+- `feat:` New feature
+- `fix:` Bug fix  
+- `docs:` Documentation
+- `chore:` Maintenance
+- `test:` Test updates
+
+## Release Process (Fully Automated)
 
 ```mermaid
-flowchart TD
-    Start([Developer starts work]) --> Branch[Create feature branch from develop]
-    Branch --> Code[Write code]
-    Code --> Changeset[Add changeset: pnpm changeset]
-    Changeset --> Commit[Commit code + changeset]
-    Commit --> Push[Push to feature branch]
-    Push --> PR1[Create PR to develop]
-    PR1 --> Review{Code Review}
-    Review -->|Approved| Merge1[Merge to develop]
-    Review -->|Changes needed| Code
-    
-    Merge1 --> Accumulate[Changesets accumulate in develop]
-    Accumulate --> Ready{Ready to release?}
-    Ready -->|No| Start
-    Ready -->|Yes| Auto[🤖 GitHub Actions triggered on develop]
-    
-    Auto --> VersionPR[Auto-creates Release PR: develop → main]
-    VersionPR --> Contains[Release PR contains:<br/>• Version bumps<br/>• CHANGELOG updates<br/>• Removed changesets]
-    Contains --> Review2{Review Release PR}
-    Review2 -->|Not ready| Close[Close PR & continue development]
-    Close --> Start
-    Review2 -->|Approved| Merge2[Merge to main]
-    
-    Merge2 --> Publish[🤖 GitHub Actions triggered on main]
-    Publish --> Build[Build packages]
-    Build --> NPM[Publish to npm]
-    NPM --> Tags[Create git tags]
-    Tags --> End([Release complete!])
-    
-    style Auto fill:#e1f5fe
-    style Publish fill:#e1f5fe
-    style VersionPR fill:#fff3e0
-    style Contains fill:#fff3e0
-    style NPM fill:#c8e6c9
-    style Tags fill:#c8e6c9
+flowchart LR
+    A[Feature PRs → develop] --> B[Changesets accumulate]
+    B --> C[🤖 Auto-creates Release PR]
+    C --> D[You: Merge Release PR to main]
+    D --> E[🤖 Publishes to npm]
+    E --> F[🤖 Syncs main → develop]
 ```
 
-### Step-by-Step Guide
+### How It Works
+1. **Develop Phase**: Merge features with changesets to `develop`
+2. **Release PR**: Auto-created from `develop` → `main` with version bumps
+3. **Publish**: Merge Release PR triggers npm publish with Provenance
+4. **Sync**: `main` auto-merges back to `develop`
 
-1. **Create a feature branch from develop:**
-   ```bash
-   git checkout develop
-   git pull origin develop
-   git checkout -b feat/your-feature-name
-   ```
+## Commands Reference
 
-2. **Make your changes and test:**
-   ```bash
-   pnpm dev        # Start development mode
-   pnpm test       # Run tests
-   pnpm check      # Run type checking and linting
-   ```
-
-3. **Add a changeset:**
-   ```bash
-   pnpm changeset
-   ```
-   - Select the packages you've changed
-   - Choose the version bump type (major/minor/patch)
-   - Write a meaningful description for the changelog
-
-4. **Commit your changes:**
-   ```bash
-   git add .
-   git commit -m "feat: your feature description"
-   ```
-   
-   Follow [Conventional Commits](https://www.conventionalcommits.org/):
-   - `feat:` New feature
-   - `fix:` Bug fix
-   - `docs:` Documentation changes
-   - `chore:` Maintenance tasks
-   - `refactor:` Code refactoring
-   - `test:` Test updates
-
-5. **Push and create a PR:**
-   ```bash
-   git push origin feat/your-feature-name
-   ```
-   Then open a PR from your branch to `develop`.
-
-## Pull Request Guidelines
-
-### PR Checklist
-When creating a pull request, ensure:
-
-- [ ] Added a changeset (run `pnpm changeset` if this PR contains user-facing changes)
-- [ ] Updated documentation (if applicable)
-- [ ] Added/updated tests
-- [ ] All tests pass (`pnpm test`)
-- [ ] Code follows style guidelines (`pnpm lint`)
-- [ ] Self-reviewed the code
-
-### PR Description Template
-```markdown
-## Description
-Brief description of changes
-
-## Type of Change
-- [ ] Bug fix (non-breaking change)
-- [ ] New feature (non-breaking change)
-- [ ] Breaking change
-- [ ] Documentation update
-
-## Related Issues
-Fixes #(issue number)
-
-## Additional Notes
-Any additional context
-```
-
-## Release Process
-
-### Automated Release Flow
-
-**How it works:**
-
-1. **Development Phase:**
-   - Developers merge features with changesets into `develop`
-   - Changesets accumulate until ready for release
-
-2. **Release PR (Automated):**
-   - GitHub Actions monitors `develop` for changesets
-   - Automatically creates/updates a "Release PR" from `develop` to `main`
-   - This PR contains:
-     - Version bumps in package.json files
-     - Updated CHANGELOG.md files
-     - Removal of consumed changeset files
-   - The PR stays open and updates as more changesets are added to `develop`
-
-3. **Release Decision:**
-   - When ready to release, review and merge the Release PR to `main`
-   - This single action triggers the entire release
-
-4. **Publishing (Automated):**
-   - Merging to `main` triggers GitHub Actions to:
-     - Build all packages
-     - Publish to npm registry
-     - Create git tags for the versions
-
-**Key Points:**
-- Version bumps ONLY happen in the Release PR (develop → main)
-- No manual PR creation needed for releases
-- `develop` never contains version bump commits
-- Clean, linear history with no divergence
-
-## Repository Setup
-
-### GitHub Configuration
-
-1. **Create `develop` branch:**
-   ```bash
-   git checkout -b develop
-   git push -u origin develop
-   ```
-
-2. **Set branch protection rules** (Settings → Branches):
-   
-   For `main`:
-   - ✅ Require pull request reviews
-   - ✅ Dismiss stale pull request approvals
-   - ✅ Require branches to be up to date
-   - ✅ Include administrators
-   
-   For `develop`:
-   - ✅ Require pull request reviews
-   - ✅ Require branches to be up to date
-
-3. **Add repository secrets** (Settings → Secrets and variables → Actions):
-   - `NPM_TOKEN`: Your npm authentication token (see npm setup below)
-
-### npm Registry Setup
-
-1. **Create npm account** (if needed):
-   - Sign up at https://www.npmjs.com/signup
-   - Enable two-factor authentication (2FA) for security
-
-2. **Login from terminal:**
-   ```bash
-   npm login
-   # Enter username, password, email, and OTP (if 2FA enabled)
-   
-   # Verify login status
-   npm whoami
-   ```
-
-3. **Generate automation token for CI/CD:**
-   ```bash
-   npm token create --type=automation
-   ```
-
-4. **Add token to GitHub:**
-   - Copy the generated token
-   - Add as `NPM_TOKEN` secret in GitHub repository settings
-
-5. **Configure package access:**
-   - All public packages must include `publishConfig` in their `package.json`:
-   ```json
-   {
-     "name": "@cove/react-sdk",
-     "publishConfig": {
-       "access": "public"
-     }
-   }
-   ```
-   - This is required for scoped packages to be published publicly
-
-6. **Verify package names are available:**
-   ```bash
-   npm view @cove/react-sdk  # Should return 404 if available
-   ```
-
-## Available Commands
-
-### Development
 ```bash
-pnpm dev          # Start dev mode for all packages
-pnpm build        # Build all packages
+# Development
+pnpm dev          # Start dev mode
+pnpm build        # Build packages
 pnpm test         # Run tests
-pnpm test:watch   # Run tests in watch mode
-```
+pnpm test:watch   # Watch mode
 
-### Code Quality
-```bash
-pnpm lint         # Check code style
-pnpm lint:fix     # Fix code style issues
-pnpm typecheck    # Check TypeScript types
-pnpm check        # Run all checks
-pnpm check:fix    # Fix all auto-fixable issues
-```
+# Quality
+pnpm lint         # Check style
+pnpm lint:fix     # Fix style
+pnpm typecheck    # Check types
+pnpm check        # All checks
+pnpm check:fix    # Fix all
 
-### Changesets & Release
-```bash
-pnpm changeset    # Add a changeset
-pnpm version      # Version packages (CI only)
-pnpm release      # Build and publish (CI only)
-```
-
-### Maintenance
-```bash
-pnpm clean        # Clean build artifacts
-pnpm audit        # Check for vulnerabilities
+# Release
+pnpm changeset    # Add changeset
+pnpm clean        # Clean build
+pnpm audit        # Security check
 ```
 
 ## Project Structure
 
 ```
-cove-js-sdk/
-├── packages/
-│   ├── types/        # (Private) TypeScript type definitions
-│   ├── utils/        # (Private) Utility functions
-│   └── react-sdk/    # (Public) React components and hooks
-├── .changeset/       # Changeset configuration
-├── .github/
-│   └── workflows/    # GitHub Actions workflows
-├── biome.json        # Code formatting and linting
-├── tsconfig.json     # TypeScript configuration
-└── vitest.config.ts  # Test configuration
+packages/
+├── types/        # Private - TypeScript types
+├── utils/        # Private - Utilities  
+└── react-sdk/    # Public - React SDK
+.changeset/       # Config (baseBranch: "main")
+.github/workflows/release.yml  # CI/CD
 ```
 
-## Need Help?
+## Setup Requirements
 
-- Check existing issues: [GitHub Issues](https://github.com/your-org/cove-js-sdk/issues)
-- Read the documentation: [README](./README.md)
-- Ask questions in discussions: [GitHub Discussions](https://github.com/your-org/cove-js-sdk/discussions)
+### GitHub Settings
+1. Enable **"Allow GitHub Actions to create and approve pull requests"**
+   - Settings → Actions → General → Workflow permissions
+2. Create `develop` branch
+3. Set branch protection for `main` and `develop`
+
+### npm Setup
+- Uses OIDC authentication (no tokens needed!)
+- Public packages need:
+```json
+{
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
+```
+
+## Pre-commit Hooks
+Automatically runs on commit:
+- Format (Biome)
+- Lint (Biome)
+- Type check (TypeScript)
+- Related tests (Vitest)
+
+Bypass if needed: `git commit --no-verify -m "emergency"`
+
+## Key Configuration
+
+| Config | Value | Purpose |
+|--------|-------|---------|
+| `baseBranch` | `"main"` | Release PRs target main |
+| `branch` param | `main` | In changeset action |
+| Package type | `"module"` | ESM support |
+| npm auth | OIDC | No tokens needed |
+
+## Help
+
+- Issues: [GitHub Issues](https://github.com/your-org/cove-js-sdk/issues)
+- Docs: [README](./README.md)
