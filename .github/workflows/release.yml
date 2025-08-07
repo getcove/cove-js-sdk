@@ -52,7 +52,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      id-token: write  # Only permission needed for npm provenance
+      contents: read   # To checkout code
+      id-token: write  # For OIDC token to authenticate with npm
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -67,6 +68,7 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'  # Required for OIDC
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -75,5 +77,6 @@ jobs:
         run: pnpm build
 
       - name: Publish to npm with Provenance
-        run: pnpm changeset publish --provenance
-        # No NPM_TOKEN needed - uses OIDC for authentication
+        run: pnpm changeset publish --provenance --access public
+        env:
+          NPM_CONFIG_PROVENANCE: true
