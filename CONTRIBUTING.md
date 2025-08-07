@@ -53,14 +53,17 @@ flowchart LR
     B --> C[🤖 Auto-creates Release PR]
     C --> D[You: Merge Release PR to main]
     D --> E[🤖 Publishes to npm]
-    E --> F[🤖 Syncs main → develop]
+    E --> F[🤖 Creates Git tags]
+    F --> G[🤖 Creates GitHub Release]
+    G --> H[🤖 Syncs main → develop]
 ```
 
 ### How It Works
 1. **Develop Phase**: Merge features with changesets to `develop`
 2. **Release PR**: Auto-created from `develop` → `main` with version bumps
 3. **Publish**: Merge Release PR triggers npm publish with Provenance
-4. **Sync**: `main` auto-merges back to `develop`
+4. **Tag & Release**: Creates Git tags and GitHub Release with changelog
+5. **Sync**: `main` auto-merges back to `develop`
 
 ## Commands Reference
 
@@ -104,10 +107,18 @@ packages/
 3. Set branch protection for `main` and `develop`
 
 ### npm Setup
-- Uses OIDC authentication (no tokens needed!)
-- Public packages need:
+1. **Create npm organization** (e.g., @getcove)
+2. **Add NPM_TOKEN secret** to GitHub repository:
+   - Create Classic Automation token at npm
+   - Add as `NPM_TOKEN` in repository secrets
+3. **Package configuration**:
 ```json
 {
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getcove/cove-js-sdk",
+    "directory": "packages/your-package"
+  },
   "publishConfig": {
     "access": "public",
     "provenance": true
@@ -130,10 +141,14 @@ Bypass if needed: `git commit --no-verify -m "emergency"`
 |--------|-------|---------|
 | `baseBranch` | `"main"` | Release PRs target main |
 | `branch` param | `main` | In changeset action |
+| `changelog` | `@changesets/changelog-github` | GitHub-linked changelogs |
 | Package type | `"module"` | ESM support |
-| npm auth | OIDC | No tokens needed |
+| npm auth | `NPM_TOKEN` | Classic Automation token |
+| GitHub Release | Auto-generated | From Git tags |
 
 ## Help
 
-- Issues: [GitHub Issues](https://github.com/your-org/cove-js-sdk/issues)
+- Issues: [GitHub Issues](https://github.com/getcove/cove-js-sdk/issues)
+- Releases: [GitHub Releases](https://github.com/getcove/cove-js-sdk/releases)
+- Packages: [npm Registry](https://www.npmjs.com/org/getcove)
 - Docs: [README](./README.md)
