@@ -40,4 +40,3 @@ export function debounce<Args extends unknown[], R>(
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-export const TEST_CONSTANT = 'test';
