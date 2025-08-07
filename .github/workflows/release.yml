@@ -41,7 +41,6 @@ jobs:
       - name: Create Version PR
         uses: changesets/action@v1
         with:
-          # 'version' parameter not needed; creating PR is the default
           commit: "chore: version packages"
           title: "chore: version packages"
         env:
@@ -53,8 +52,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      id-token: write
+      id-token: write  # Only permission needed for npm provenance
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -76,8 +74,6 @@ jobs:
       - name: Build Packages
         run: pnpm build
 
-      - name: Publish to npm
-        run: pnpm changeset publish
-        env:
-          # NPM_TOKEN must be set as a repository secret in GitHub settings
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to npm with Provenance
+        run: pnpm changeset publish --provenance
+        # No NPM_TOKEN needed - uses OIDC for authentication
