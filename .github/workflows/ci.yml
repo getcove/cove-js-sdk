@@ -8,8 +8,11 @@ on:
 
 jobs:
   test:
-    name: Test
+    name: Test (React ${{ matrix.react-version }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react-version: [17, 18, 19]
     steps:
       - uses: actions/checkout@v4
       
@@ -22,8 +25,10 @@ jobs:
           node-version: 20
           cache: 'pnpm'
       
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Install dependencies with React ${{ matrix.react-version }}
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add -w react@^${{ matrix.react-version }} react-dom@^${{ matrix.react-version }} @types/react@^${{ matrix.react-version }} @types/react-dom@^${{ matrix.react-version }}
       
       - name: Build packages
         run: pnpm build
