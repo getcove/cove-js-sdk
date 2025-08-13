@@ -5,8 +5,6 @@ A modern TypeScript SDK for building Cove applications.
 ## Packages
 
 - `@getcove/react-sdk` - React components and hooks for Cove integration
-- `@getcove/types` - (Internal) TypeScript type definitions
-- `@getcove/utils` - (Internal) Utility functions
 
 ## Development
 
