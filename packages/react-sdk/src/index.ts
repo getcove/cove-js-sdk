@@ -4,3 +4,5 @@ export function useCove() {
     initialized: true,
   };
 }
+
+export type { Config } from './types';
