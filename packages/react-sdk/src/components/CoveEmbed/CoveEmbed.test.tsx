@@ -36,7 +36,7 @@ describe('CoveEmbed', () => {
     expect(iframe).toHaveAttribute('width', '100%');
     expect(iframe).toHaveAttribute('id', 'cove-embed');
     expect(iframe).toHaveAttribute('allow', 'camera; microphone; accelerometer');
-    expect(iframe).toHaveAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
+    expect(iframe).toHaveAttribute('sandbox', 'allow-scripts allow-forms');
   });
 
   it('uses default props when not provided', () => {
@@ -47,6 +47,17 @@ describe('CoveEmbed', () => {
     const iframe = screen.getByTitle('Cove Embed');
     expect(iframe).toHaveAttribute('height', '800');
     expect(iframe).toHaveAttribute('width', '100%');
+    expect(iframe).toHaveAttribute('allow', 'camera; microphone; accelerometer');
+  });
+
+  it('accepts custom allow permissions', () => {
+    const testUrl = 'https://app.cove.dev/test';
+    const customAllow = 'microphone; camera';
+
+    render(<CoveEmbed url={testUrl} allow={customAllow} />);
+
+    const iframe = screen.getByTitle('Cove Embed');
+    expect(iframe).toHaveAttribute('allow', customAllow);
   });
 
   it('sets up message event listener on mount', () => {

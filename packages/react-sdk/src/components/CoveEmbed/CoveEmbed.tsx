@@ -13,6 +13,7 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
   url,
   height = 800,
   width = '100%',
+  allow = 'camera; microphone; accelerometer',
   onComplete,
   onMessage,
 }) => {
@@ -83,8 +84,8 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
       src={url}
       height={height}
       width={width}
-      allow="camera; microphone; accelerometer"
-      sandbox="allow-scripts allow-same-origin allow-forms"
+      allow={allow}
+      sandbox="allow-scripts allow-forms"
     />
   );
 };

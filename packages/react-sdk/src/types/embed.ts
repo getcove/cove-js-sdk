@@ -6,6 +6,8 @@ export interface CoveEmbedProps {
   height?: number | string;
   /** Width of the iframe (default: "100%") */
   width?: number | string;
+  /** Iframe allow attribute for permissions (default: "camera; microphone; accelerometer") */
+  allow?: string;
   /** Callback fired when user completes the flow */
   onComplete?: (data: CoveEmbedMessage) => void;
   /** Callback fired for all messages from the embed */
