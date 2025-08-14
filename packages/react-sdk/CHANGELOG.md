@@ -1,5 +1,11 @@
 # @getcove/react-sdk
 
+## 0.1.3
+
+### Patch Changes
+
+- [#66](https://github.com/getcove/cove-js-sdk/pull/66) [`6df7a0e`](https://github.com/getcove/cove-js-sdk/commit/6df7a0e0cadfceb84b1268b26aee66d359a79fe5) Thanks [@phillycove](https://github.com/phillycove)! - Fix CORS error by adding allow-same-origin to iframe sandbox
+
 ## 0.1.2
 
 ### Patch Changes

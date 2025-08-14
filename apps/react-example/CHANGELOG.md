@@ -1,5 +1,12 @@
 # @apps/react-example
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`6df7a0e`](https://github.com/getcove/cove-js-sdk/commit/6df7a0e0cadfceb84b1268b26aee66d359a79fe5)]:
+  - @getcove/react-sdk@0.1.3
+
 ## 0.0.3
 
 ### Patch Changes
