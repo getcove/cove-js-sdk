@@ -1,5 +1,11 @@
 # @getcove/react-sdk
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated package version to 0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
