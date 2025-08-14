@@ -1,5 +1,11 @@
 # @getcove/react-sdk
 
+## 0.1.0
+
+### Minor Changes
+
+- [#32](https://github.com/getcove/cove-js-sdk/pull/32) [`aca949c`](https://github.com/getcove/cove-js-sdk/commit/aca949c22fdbfba5cce8a5a04de4932fbf76b1db) Thanks [@phillycove](https://github.com/phillycove)! - Consolidate monorepo by removing separate types/utils packages
+
 ## 0.0.2
 
 ### Patch Changes
