@@ -85,7 +85,7 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
       height={height}
       width={width}
       allow={allow}
-      sandbox="allow-scripts allow-forms"
+      sandbox="allow-scripts allow-forms allow-same-origin"
     />
   );
 };
