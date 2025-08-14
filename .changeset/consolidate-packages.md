@@ -1,5 +1,5 @@
 ---
-'@getcove/react-sdk': minor
+'@getcove/react-sdk': patch
 ---
 
 Consolidate monorepo by removing separate types/utils packages
