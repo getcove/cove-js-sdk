@@ -1,5 +1,5 @@
 import type React from 'react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CoveEmbedMessage, CoveEmbedOrigin, CoveEmbedProps } from '../../types/embed';
 
 const ALLOWED_ORIGINS: CoveEmbedOrigin[] = [
@@ -15,9 +15,18 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
   width = '100%',
   onComplete,
   onMessage,
-  iframeProps,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [showIframe, setShowIframe] = useState(true);
+
+  const getIframeOrigin = useCallback(() => {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.origin;
+    } catch {
+      return null;
+    }
+  }, [url]);
 
   const isValidOrigin = useCallback((origin: string): origin is CoveEmbedOrigin => {
     return ALLOWED_ORIGINS.includes(origin as CoveEmbedOrigin);
@@ -34,7 +43,10 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
 
       // Forward message to iframe if needed
       if (iframeRef.current?.contentWindow) {
-        iframeRef.current.contentWindow.postMessage(data, '*');
+        const iframeOrigin = getIframeOrigin();
+        if (iframeOrigin && isValidOrigin(iframeOrigin)) {
+          iframeRef.current.contentWindow.postMessage(data, iframeOrigin);
+        }
       }
 
       // Call user-provided message handler
@@ -44,13 +56,11 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
       if (data.source === 'cove-embed' && data.status === 'USER_COMPLETE') {
         onComplete?.(data);
 
-        // Remove iframe on completion (matching original behavior)
-        if (iframeRef.current) {
-          iframeRef.current.remove();
-        }
+        // Remove iframe on completion (React-idiomatic way)
+        setShowIframe(false);
       }
     },
-    [onComplete, onMessage, isValidOrigin],
+    [onComplete, onMessage, isValidOrigin, getIframeOrigin],
   );
 
   useEffect(() => {
@@ -60,6 +70,10 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
       window.removeEventListener('message', handleMessage);
     };
   }, [handleMessage]);
+
+  if (!showIframe) {
+    return null;
+  }
 
   return (
     <iframe
@@ -71,7 +85,6 @@ export const CoveEmbed: React.FC<CoveEmbedProps> = ({
       width={width}
       allow="camera; microphone; accelerometer"
       sandbox="allow-scripts allow-same-origin allow-forms"
-      {...iframeProps}
     />
   );
 };

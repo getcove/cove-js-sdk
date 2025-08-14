@@ -10,8 +10,6 @@ export interface CoveEmbedProps {
   onComplete?: (data: CoveEmbedMessage) => void;
   /** Callback fired for all messages from the embed */
   onMessage?: (data: CoveEmbedMessage) => void;
-  /** Additional iframe attributes */
-  iframeProps?: React.IframeHTMLAttributes<HTMLIFrameElement>;
 }
 
 export interface CoveEmbedMessage {
