@@ -1,5 +1,6 @@
-// Components
-export { CoveEmbed } from './components';
-
-// Types
-export type { CoveEmbedMessage, CoveEmbedOrigin, CoveEmbedProps } from './types';
+// Minimal React SDK
+export function useCove() {
+  return {
+    initialized: true,
+  };
+}
