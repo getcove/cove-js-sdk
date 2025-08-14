@@ -1,5 +1,15 @@
 # @getcove/react-sdk
 
+## 0.1.2
+
+### Patch Changes
+
+- Bump version to 0.1.2
+
+## 0.1.1
+
+- Bump version to 0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
