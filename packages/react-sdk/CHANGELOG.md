@@ -1,5 +1,33 @@
 # @getcove/react-sdk
 
+## 0.1.2
+
+### Patch Changes
+
+- Bump version to 0.1.2
+
+## 0.1.1
+
+- Bump version to 0.1.1
+
+## 0.1.0
+
+### Minor Changes
+
+- [#36](https://github.com/getcove/cove-js-sdk/pull/36) [`57b395e`](https://github.com/getcove/cove-js-sdk/commit/57b395e36612cabc0b95ff26433fbbd4ad00cd07) Thanks [@phillycove](https://github.com/phillycove)! - feat: add CoveEmbed component and reorganize package structure
+
+  - Add CoveEmbed React component for iframe integration
+  - Implement secure origin validation and message handling
+  - Reorganize package structure with components/, types/, and utils/ folders
+  - Add comprehensive TypeScript interfaces for embed functionality
+  - Support configurable iframe props and event callbacks
+
+### Patch Changes
+
+- [#32](https://github.com/getcove/cove-js-sdk/pull/32) [`aca949c`](https://github.com/getcove/cove-js-sdk/commit/aca949c22fdbfba5cce8a5a04de4932fbf76b1db) Thanks [@phillycove](https://github.com/phillycove)! - Consolidate monorepo by removing separate types/utils packages
+
+- [#57](https://github.com/getcove/cove-js-sdk/pull/57) [`695ace3`](https://github.com/getcove/cove-js-sdk/commit/695ace3960f14af111ff2f7ff9f2e856068bb127) Thanks [@phillycove](https://github.com/phillycove)! - Update documentation to reflect new develop-based release workflow
+
 ## 0.0.2
 
 ### Patch Changes
