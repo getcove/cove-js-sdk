@@ -4,7 +4,7 @@
 
 ```bash
 # Setup
-git clone https://github.com/your-org/cove-js-sdk.git
+git clone https://github.com/getcove/cove-js-sdk.git
 cd cove-js-sdk
 pnpm install
 pnpm build
@@ -55,7 +55,7 @@ flowchart LR
     D --> E[🤖 Publishes to npm]
     E --> F[🤖 Creates Git tags]
     F --> G[🤖 Creates GitHub Release]
-    G --> H[🤖 Syncs main → develop]
+    G --> H[🤖 Creates sync PR main → develop]
 ```
 
 ### How It Works
@@ -63,7 +63,7 @@ flowchart LR
 2. **Release PR**: Auto-created from `develop` → `main` with version bumps
 3. **Publish**: Merge Release PR triggers npm publish with Provenance
 4. **Tag & Release**: Creates Git tags and GitHub Release with changelog
-5. **Sync**: `main` auto-merges back to `develop`
+5. **Sync**: Creates PR to merge `main` back to `develop`
 
 ## Commands Reference
 
@@ -91,10 +91,10 @@ pnpm audit        # Security check
 
 ```
 packages/
-├── types/        # Private - TypeScript types
-├── utils/        # Private - Utilities  
-└── react-sdk/    # Public - React SDK
-.changeset/       # Config (baseBranch: "main")
+└── react-sdk/        # Public - React SDK
+apps/
+└── react-example/    # Example app
+.changeset/           # Config (baseBranch: "develop")
 .github/workflows/release.yml  # CI/CD
 ```
 
@@ -117,7 +117,7 @@ packages/
   "repository": {
     "type": "git",
     "url": "https://github.com/getcove/cove-js-sdk",
-    "directory": "packages/your-package"
+    "directory": "packages/react-sdk"
   },
   "publishConfig": {
     "access": "public",
@@ -139,7 +139,7 @@ Bypass if needed: `git commit --no-verify -m "emergency"`
 
 | Config | Value | Purpose |
 |--------|-------|---------|
-| `baseBranch` | `"main"` | Release PRs target main |
+| `baseBranch` | `"develop"` | Release PRs created from develop |
 | `branch` param | `main` | In changeset action |
 | `changelog` | `@changesets/changelog-github` | GitHub-linked changelogs |
 | Package type | `"module"` | ESM support |
