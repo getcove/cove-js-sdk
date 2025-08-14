@@ -36,7 +36,7 @@ describe('CoveEmbed', () => {
     expect(iframe).toHaveAttribute('width', '100%');
     expect(iframe).toHaveAttribute('id', 'cove-embed');
     expect(iframe).toHaveAttribute('allow', 'camera; microphone; accelerometer');
-    expect(iframe).toHaveAttribute('sandbox', 'allow-scripts allow-forms');
+    expect(iframe).toHaveAttribute('sandbox', 'allow-scripts allow-forms allow-same-origin');
   });
 
   it('uses default props when not provided', () => {
