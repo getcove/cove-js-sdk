@@ -5,7 +5,13 @@ export default defineConfig({
     globals: true,
     environment: 'node',
     include: ['packages/*/src/**/*.test.ts'],
-    exclude: ['**/node_modules/**', '**/dist/**', '**/build/**'],
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/build/**',
+      'packages/react-sdk/src/**/*.test.tsx', // React tests use their own jsdom config
+    ],
+    passWithNoTests: true,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
