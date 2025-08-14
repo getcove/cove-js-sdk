@@ -1,0 +1,1 @@
+export { CoveEmbed } from './CoveEmbed';
