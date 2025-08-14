@@ -15,5 +15,5 @@
     "**/*.test.tsx",
     "**/*.spec.tsx"
   ],
-  "references": []
+  "references": [{ "path": "../types" }, { "path": "../utils" }]
 }

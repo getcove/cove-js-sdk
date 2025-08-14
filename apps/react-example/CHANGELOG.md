@@ -1,20 +1,5 @@
 # @apps/react-example
 
-## 0.0.3
-
-### Patch Changes
-
-- [#36](https://github.com/getcove/cove-js-sdk/pull/36) [`4a29580`](https://github.com/getcove/cove-js-sdk/commit/4a29580ebf6a503be3553101bbf3436372aa012e) Thanks [@phillycove](https://github.com/phillycove)! - improve: enhance playground with environment configuration and better UI
-
-  - Add environment variable support for VITE_COVE_EMBED_URL
-  - Implement professional UI design with card-based layout
-  - Add configuration error handling and user guidance
-  - Include comprehensive setup documentation in README
-  - Remove unnecessary VITE_COVE_ENV variable for simplicity
-
-- Updated dependencies [[`aca949c`](https://github.com/getcove/cove-js-sdk/commit/aca949c22fdbfba5cce8a5a04de4932fbf76b1db), [`57b395e`](https://github.com/getcove/cove-js-sdk/commit/57b395e36612cabc0b95ff26433fbbd4ad00cd07)]:
-  - @getcove/react-sdk@0.1.0
-
 ## 0.0.2
 
 ### Patch Changes

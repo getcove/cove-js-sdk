@@ -4,7 +4,7 @@
 
 ```bash
 # Setup
-git clone https://github.com/getcove/cove-js-sdk.git
+git clone https://github.com/your-org/cove-js-sdk.git
 cd cove-js-sdk
 pnpm install
 pnpm build
@@ -91,10 +91,10 @@ pnpm audit        # Security check
 
 ```
 packages/
-└── react-sdk/        # Public - React SDK
-apps/
-└── react-example/    # Example app
-.changeset/           # Config (baseBranch: "main")
+├── types/        # Private - TypeScript types
+├── utils/        # Private - Utilities  
+└── react-sdk/    # Public - React SDK
+.changeset/       # Config (baseBranch: "main")
 .github/workflows/release.yml  # CI/CD
 ```
 
@@ -117,7 +117,7 @@ apps/
   "repository": {
     "type": "git",
     "url": "https://github.com/getcove/cove-js-sdk",
-    "directory": "packages/react-sdk"
+    "directory": "packages/your-package"
   },
   "publishConfig": {
     "access": "public",

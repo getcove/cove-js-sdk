@@ -2,7 +2,6 @@ version: 2
 updates:
   - package-ecosystem: "npm"
     directory: "/"
-    target-branch: "develop"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -20,11 +19,10 @@ updates:
     labels:
       - "dependencies"
     assignees:
-      - "phillycove"
+      - "octocat"
     
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: "develop"
     schedule:
       interval: "weekly"
     commit-message:
@@ -32,47 +30,3 @@ updates:
       include: "scope"
     labels:
       - "github-actions"
-
-  - package-ecosystem: "npm"
-    directory: "/packages/react-sdk"
-    target-branch: "develop"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 10
-    groups:
-      dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
-    labels:
-      - "dependencies"
-    assignees:
-      - "phillycove"
-
-  - package-ecosystem: "npm"
-    directory: "/apps/react-example"
-    target-branch: "develop"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-    open-pull-requests-limit: 10
-    groups:
-      dependencies:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-    commit-message:
-      prefix: "chore"
-      include: "scope"
-    labels:
-      - "dependencies"
-    assignees:
-      - "phillycove"
