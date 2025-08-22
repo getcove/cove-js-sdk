@@ -1,5 +1,11 @@
 # @getcove/react-sdk
 
+## 0.1.4
+
+### Patch Changes
+
+- [#69](https://github.com/getcove/cove-js-sdk/pull/69) [`5fa1cae`](https://github.com/getcove/cove-js-sdk/commit/5fa1cae5d3bba872cdea9b7df262f2c255836874) Thanks [@phillycove](https://github.com/phillycove)! - Update environment variable example from session-id to screening-id for better clarity
+
 ## 0.1.3
 
 ### Patch Changes
