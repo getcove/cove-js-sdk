@@ -4,10 +4,11 @@ import { useState } from 'react';
 export function ApplicationsDashboardExample() {
   const [isLive, setIsLive] = useState(false);
 
-  // Mock embed token - In production, fetch this from your backend
-  // which exchanges a partner_token for an embed_token via Cove API
-  const embedToken =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJjb3ZlLWlmcmFtZSIsImV4cCI6MTc3MTI4NjIwMywiZXh0ZXJuYWxVc2VyRW1haWwiOiJhZ2VudDJAbGVhc2VodWIuYXBwIiwiaWF0IjoxNzcxMjg1OTAzLCJpc3MiOiJhcGktc2VydmljZSIsInBhcnRuZXJJZCI6IjY5OGZhZmJjM2I2YWEzNzFjODA2NzEyYSIsInR5cCI6ImVtYmVkX3Rva2VuIn0.Flg_2Wb6RTiCI3LCXBlrw9Cy5aVP3k5jyCBE4erW1o4';
+  // Mock embed token for example purposes only.
+  // In production, never hardcode real tokens. Fetch the embed token from your backend
+  // (for example via an environment variable) which exchanges a partner_token for an
+  // embed_token via the Cove API.
+  const embedToken = 'TEST_EMBED_TOKEN_REPLACE_ME';
 
   const handleDashboardMessage = (data: CoveEmbedMessage) => {
     console.log('Dashboard message received:', data);
