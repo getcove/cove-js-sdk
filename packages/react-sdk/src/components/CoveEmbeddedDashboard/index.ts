@@ -1,2 +1,1 @@
-export { CoveEmbed } from './CoveEmbed';
 export { CoveEmbeddedDashboard } from './CoveEmbeddedDashboard';

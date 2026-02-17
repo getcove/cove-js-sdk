@@ -3,10 +3,74 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cove SDK Playground</title>
+    <title>Cove SDK Examples</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        background-color: #f8fafc;
+      }
+      h1 {
+        color: #1e293b;
+        margin-bottom: 0.5rem;
+      }
+      .subtitle {
+        color: #64748b;
+        margin-bottom: 3rem;
+      }
+      .examples {
+        display: grid;
+        gap: 1.5rem;
+      }
+      .example-card {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+      }
+      .example-card h2 {
+        margin-top: 0;
+        color: #1e293b;
+      }
+      .example-card p {
+        color: #475569;
+        line-height: 1.6;
+      }
+      .example-card a {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background: #3b82f6;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: background 0.2s;
+      }
+      .example-card a:hover {
+        background: #2563eb;
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <h1>@getcove/react-sdk Examples</h1>
+    <p class="subtitle">Choose an example to view</p>
+
+    <div class="examples">
+      <div class="example-card">
+        <h2>Identity Verification</h2>
+        <p>Embed the Cove identity verification flow using the CoveEmbed component.</p>
+        <a href="/embed.html">View Example →</a>
+      </div>
+
+      <div class="example-card">
+        <h2>Applications Dashboard</h2>
+        <p>Embed the Cove applications dashboard using the CoveEmbeddedDashboard component with authentication.</p>
+        <a href="/dashboard.html">View Example →</a>
+      </div>
+    </div>
   </body>
 </html>

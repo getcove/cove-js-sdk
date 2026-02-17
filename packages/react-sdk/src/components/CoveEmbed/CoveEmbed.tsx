@@ -1,6 +1,7 @@
 import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { CoveEmbedMessage, CoveEmbedOrigin, CoveEmbedProps } from '../../types/embed';
+import type { CoveEmbedOrigin, CoveEmbedProps } from '../../types/embed';
+import type { CoveEmbedMessage } from '../../types/embedMessage';
 
 const ALLOWED_ORIGINS: CoveEmbedOrigin[] = [
   'https://app.cove.dev',

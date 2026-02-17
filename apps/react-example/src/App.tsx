@@ -1,17 +1,14 @@
-import { CoveEmbed, type CoveEmbedMessage } from '@getcove/react-sdk';
+import { useState } from 'react';
+import { ApplicationsDashboardExample } from './ApplicationsDashboardExample';
+import { IdentityVerificationExample } from './IdentityVerificationExample';
+
+type Tab = 'embed' | 'dashboard';
 
 function App() {
   const coveUrl = import.meta.env.VITE_COVE_EMBED_URL;
+  const [activeTab, setActiveTab] = useState<Tab>('embed');
 
-  const handleComplete = (data: CoveEmbedMessage) => {
-    console.log('Cove flow completed:', data);
-  };
-
-  const handleMessage = (data: CoveEmbedMessage) => {
-    console.log('Cove message received:', data);
-  };
-
-  if (!coveUrl) {
+  if (!coveUrl && activeTab === 'embed') {
     return (
       <div style={{ padding: '2rem', fontFamily: 'system-ui' }}>
         <h1>@getcove/react-sdk Playground</h1>
@@ -54,64 +51,56 @@ function App() {
         Demo application showcasing the Cove iframe integration
       </p>
 
+      {/* Tab Navigation */}
       <div
         style={{
-          backgroundColor: 'white',
-          borderRadius: '12px',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          padding: '1.5rem',
-          border: '1px solid #e2e8f0',
+          display: 'flex',
+          gap: '1rem',
+          marginBottom: '2rem',
+          borderBottom: '2px solid #e2e8f0',
         }}
       >
-        <h2
+        <button
+          type="button"
+          onClick={() => setActiveTab('embed')}
           style={{
-            fontSize: '1.5rem',
+            padding: '1rem 2rem',
+            fontSize: '1rem',
             fontWeight: '500',
-            color: '#374151',
-            marginBottom: '1rem',
+            color: activeTab === 'embed' ? '#3b82f6' : '#64748b',
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'embed' ? '2px solid #3b82f6' : '2px solid transparent',
+            marginBottom: '-2px',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
           }}
         >
-          Cove Identity Verification
-        </h2>
-
-        <div
+          Identity Verification
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('dashboard')}
           style={{
-            backgroundColor: '#f1f5f9',
-            borderRadius: '8px',
-            padding: '1rem',
-            marginBottom: '1.5rem',
-            border: '1px solid #cbd5e1',
+            padding: '1rem 2rem',
+            fontSize: '1rem',
+            fontWeight: '500',
+            color: activeTab === 'dashboard' ? '#3b82f6' : '#64748b',
+            backgroundColor: 'transparent',
+            border: 'none',
+            borderBottom: activeTab === 'dashboard' ? '2px solid #3b82f6' : '2px solid transparent',
+            marginBottom: '-2px',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
           }}
         >
-          <p
-            style={{
-              color: '#475569',
-              fontSize: '0.9rem',
-              margin: '0',
-              lineHeight: '1.5',
-            }}
-          >
-            This iframe contains the Cove identity verification flow. The component handles secure
-            communication and auto-removal on completion.
-          </p>
-        </div>
-
-        <div
-          style={{
-            borderRadius: '8px',
-            overflow: 'hidden',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <CoveEmbed
-            url={coveUrl}
-            height={700}
-            width="100%"
-            onComplete={handleComplete}
-            onMessage={handleMessage}
-          />
-        </div>
+          Applications Dashboard
+        </button>
       </div>
+
+      {/* Tab Content */}
+      {activeTab === 'embed' && <IdentityVerificationExample coveUrl={coveUrl} />}
+      {activeTab === 'dashboard' && <ApplicationsDashboardExample />}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { act, cleanup, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import type { CoveEmbedMessage } from '../../types/embed';
+import type { CoveEmbedMessage } from '../../types/embedMessage';
 import { CoveEmbed } from './CoveEmbed';
 
 let addEventListenerSpy: ReturnType<typeof vi.spyOn>;
@@ -79,7 +79,6 @@ describe('CoveEmbed', () => {
     const testMessage: CoveEmbedMessage = {
       source: 'cove-embed',
       status: 'PROCESSING',
-      data: 'test data',
     };
 
     render(<CoveEmbed url="https://app.cove.dev/test" onMessage={mockOnMessage} />);
@@ -101,7 +100,6 @@ describe('CoveEmbed', () => {
     const completeMessage: CoveEmbedMessage = {
       source: 'cove-embed',
       status: 'USER_COMPLETE',
-      result: 'success',
     };
 
     render(<CoveEmbed url="https://sandbox.cove.dev/test" onComplete={mockOnComplete} />);
