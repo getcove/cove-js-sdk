@@ -1,5 +1,19 @@
 # @getcove/react-sdk
 
+## 0.2.0
+
+### Minor Changes
+
+- [#85](https://github.com/getcove/cove-js-sdk/pull/85) [`26570f1`](https://github.com/getcove/cove-js-sdk/commit/26570f1d97c02cb721960f390c55e54156259134) Thanks [@cove-cyril](https://github.com/cove-cyril)! - Add CoveEmbeddedDashboard component for applications dashboard embedding
+
+  - New `CoveEmbeddedDashboard` component to embed Cove applications dashboard
+  - Support `embedToken` prop for iframe authentication via postMessage
+  - Environment switching with `isLive` prop (production vs sandbox)
+  - Sends `AUTHENTICATE` message in response to `READY` signal from iframe
+  - Secure origin validation for all messages
+  - Comprehensive test suite with 14 test cases
+  - Updated react-example with separate component files for each use case
+
 ## 0.1.4
 
 ### Patch Changes
