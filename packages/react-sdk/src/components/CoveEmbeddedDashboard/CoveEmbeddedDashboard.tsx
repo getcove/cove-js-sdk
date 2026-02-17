@@ -29,7 +29,7 @@ export const CoveEmbeddedDashboard: React.FC<CoveEmbeddedDashboardProps> = ({
   onMessage,
 }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const authSentRef = useRef(false);
+  const lastAuthTokenRef = useRef<string | null>(null);
   const dashboardUrl = getDefaultDashboardUrl(isLive);
 
   const getIframeOrigin = useCallback(() => {
@@ -59,12 +59,12 @@ export const CoveEmbeddedDashboard: React.FC<CoveEmbeddedDashboardProps> = ({
 
       const messageData: CoveEmbedMessage = data;
 
-      // If iframe is ready for auth, send the auth message (only once)
+      // If iframe is ready for auth, send the auth message (skip if same token already sent)
       if (
         data.signal === EmbedSignal.READY &&
         data.status === 'READY_FOR_AUTH' &&
         embedToken &&
-        !authSentRef.current
+        lastAuthTokenRef.current !== embedToken
       ) {
         const iframeOrigin = getIframeOrigin();
         if (iframeRef.current?.contentWindow && iframeOrigin && isValidOrigin(iframeOrigin)) {
@@ -74,7 +74,7 @@ export const CoveEmbeddedDashboard: React.FC<CoveEmbeddedDashboardProps> = ({
             token: embedToken,
           } satisfies CoveEmbedMessage;
           iframeRef.current.contentWindow.postMessage(authMessage, iframeOrigin);
-          authSentRef.current = true;
+          lastAuthTokenRef.current = embedToken;
           console.log('[CoveEmbeddedDashboard] Auth sent');
         }
       }
