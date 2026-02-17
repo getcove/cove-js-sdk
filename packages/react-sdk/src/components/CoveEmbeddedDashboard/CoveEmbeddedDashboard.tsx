@@ -58,7 +58,6 @@ export const CoveEmbeddedDashboard: React.FC<CoveEmbeddedDashboardProps> = ({
       }
 
       const messageData: CoveEmbedMessage = data;
-      console.log('[CoveEmbeddedDashboard] Message received:', messageData);
 
       // If iframe is ready for auth, send the auth message (only once)
       if (
