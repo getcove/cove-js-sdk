@@ -21,7 +21,7 @@ const getDefaultDashboardUrl = (isLive: boolean): string => {
 };
 
 export const CoveEmbeddedDashboard: React.FC<CoveEmbeddedDashboardProps> = ({
-  isLive = true,
+  isLive = false,
   embedToken,
   height = 800,
   width = '100%',
