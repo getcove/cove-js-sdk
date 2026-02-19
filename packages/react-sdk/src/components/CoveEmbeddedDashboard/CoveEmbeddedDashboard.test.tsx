@@ -39,11 +39,11 @@ describe('CoveEmbeddedDashboard', () => {
     expect(iframe).toHaveAttribute('sandbox', 'allow-scripts allow-forms allow-same-origin');
   });
 
-  it('should use production URL when isLive is true (default)', () => {
+  it('should use sandbox URL by default (isLive defaults to false)', () => {
     render(<CoveEmbeddedDashboard />);
 
     const iframe = screen.getByTitle('Cove Embedded Dashboard');
-    expect(iframe).toHaveAttribute('src', 'https://app.cove.dev/embed/applications');
+    expect(iframe).toHaveAttribute('src', 'https://sandbox.cove.dev/embed/applications');
   });
 
   it('should use production URL when isLive is explicitly true', () => {
