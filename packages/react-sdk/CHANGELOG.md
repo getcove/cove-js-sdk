@@ -1,5 +1,11 @@
 # @getcove/react-sdk
 
+## 0.2.1
+
+### Patch Changes
+
+- [#93](https://github.com/getcove/cove-js-sdk/pull/93) [`0cff179`](https://github.com/getcove/cove-js-sdk/commit/0cff179d73c43f45f4277dd9f2086aed59101bdb) Thanks [@cove-cyril](https://github.com/cove-cyril)! - Fix default isLive value to false in CoveEmbeddedDashboard and update tests to match
+
 ## 0.2.0
 
 ### Minor Changes
