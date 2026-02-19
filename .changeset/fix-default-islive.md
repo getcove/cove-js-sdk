@@ -1,5 +1,5 @@
 ---
-"@cove.tool/react-sdk": patch
+"@getcove/react-sdk": patch
 ---
 
 Fix default isLive value to false in CoveEmbeddedDashboard and update tests to match
