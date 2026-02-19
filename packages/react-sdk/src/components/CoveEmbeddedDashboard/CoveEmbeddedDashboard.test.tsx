@@ -145,7 +145,7 @@ describe('CoveEmbeddedDashboard', () => {
 
     const messageEvent = new MessageEvent('message', {
       data: messageData,
-      origin: 'https://app.cove.dev',
+      origin: 'https://sandbox.cove.dev',
     });
 
     window.dispatchEvent(messageEvent);
@@ -196,7 +196,7 @@ describe('CoveEmbeddedDashboard', () => {
 
     const messageEvent = new MessageEvent('message', {
       data: messageData,
-      origin: 'https://app.cove.dev',
+      origin: 'https://sandbox.cove.dev',
     });
 
     window.dispatchEvent(messageEvent);
@@ -241,7 +241,7 @@ describe('CoveEmbeddedDashboard', () => {
 
     const messageEvent = new MessageEvent('message', {
       data: messageData,
-      origin: 'https://app.cove.dev',
+      origin: 'https://sandbox.cove.dev',
     });
 
     window.dispatchEvent(messageEvent);
