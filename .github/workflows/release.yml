@@ -19,7 +19,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
@@ -59,7 +59,7 @@ jobs:
       id-token: write  # For npm Provenance
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       
